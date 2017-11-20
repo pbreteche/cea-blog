@@ -1,0 +1,21 @@
+{
+    "name": "pierre/blog",
+    "description": "Training project illustrating MVC",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Pierre Breteche",
+            "email": "pbreteche@dawan.fr"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Pierre\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=7.1.0"
+    }
+}
