@@ -4,15 +4,40 @@ namespace Pierre\controller;
 
 
 use Pierre\controller\http\Response;
+use Pierre\model\ArticleRepository;
+use Pierre\model\RepositoryFactory;
 
-class ArticleController {
+class ArticleController
+{
 
-    public function indexAction(): Response {
-
-        return new Response(200, 'index action works');
+    public function __construct()
+    {
+        $this->templateEngine = new TemplateEngine();
     }
 
-    public function showAction(): Response {
+    /**
+     * Liste des derniers articles
+     *
+     * @return Response
+     */
+    public function indexAction(): Response
+    {
+        /** @var \Pierre\model\ArticleRepository $articleRepository */
+        $articleRepository = RepositoryFactory::get('article');
+        $articles = $articleRepository->findLatest();
+        return new Response(
+            200,
+            $this->templateEngine->render(
+                'article',
+                [
+                    'articles' => $articles,
+                ]
+            )
+        );
+    }
+
+    public function showAction(): Response
+    {
         return new Response(200, 'show action works');
     }
 }

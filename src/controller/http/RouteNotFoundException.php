@@ -3,6 +3,7 @@
 namespace Pierre\controller\http;
 
 
-class RouteNotFoundException extends \Exception {
+class RouteNotFoundException extends \Exception
+{
 
 }

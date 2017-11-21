@@ -3,7 +3,8 @@
 namespace Pierre\controller\http;
 
 
-class Request {
+class Request
+{
 
     /**
      * @var string[]
@@ -20,8 +21,9 @@ class Request {
      */
     private $path;
 
-    public static function createFromGlobals(): self {
-        $instance =new self;
+    public static function createFromGlobals(): self
+    {
+        $instance = new self;
 
         $instance->getParameters = $_GET;
         $instance->query = $_SERVER['REQUEST_URI'];
@@ -33,21 +35,24 @@ class Request {
     /**
      * @return string[]
      */
-    public function getGetParameters(): array {
+    public function getGetParameters(): array
+    {
         return $this->getParameters;
     }
 
     /**
      * @return string
      */
-    public function getQuery(): string {
+    public function getQuery(): string
+    {
         return $this->query;
     }
 
     /**
      * @return string
      */
-    public function getPath(): string {
+    public function getPath(): string
+    {
         return $this->path;
     }
 

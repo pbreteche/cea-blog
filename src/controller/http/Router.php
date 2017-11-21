@@ -3,7 +3,8 @@
 namespace Pierre\controller\http;
 
 
-class Router {
+class Router
+{
 
     /**
      * @var array
@@ -26,12 +27,14 @@ class Router {
      * @return array
      * @throws RouteNotFoundException
      */
-    public function match(Request $request): array {
+    public function match(Request $request): array
+    {
         $requestPath = $request->getPath();
 
         foreach ($this->routes as $routePath => $routeConfig) {
 
-            if (preg_match($this->generateRegEx($routePath), $requestPath, $matches)) {
+            if (preg_match($this->generateRegEx($routePath), $requestPath,
+                $matches)) {
                 array_shift($matches);
                 $routeConfig['parameters'] = $matches;
                 return $routeConfig;
@@ -40,7 +43,8 @@ class Router {
         throw new RouteNotFoundException();
     }
 
-    private function generateRegEx(string $routePath): string {
-        return '/^' . str_replace('/','\/',$routePath) . '$/';
+    private function generateRegEx(string $routePath): string
+    {
+        return '/^' . str_replace('/', '\/', $routePath) . '$/';
     }
 }

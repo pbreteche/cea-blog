@@ -7,24 +7,23 @@ use Pierre\controller\http\Response;
 use Pierre\controller\http\RouteNotFoundException;
 use Pierre\controller\http\Router;
 
-class BlogApp {
+class BlogApp
+{
 
-    public function handle(Request $request): Response {
+    public function handle(Request $request): Response
+    {
 
         $router = new Router(APP_ROOT . '/config/routing.conf.php');
 
         try {
             $routeInfo = $router->match($request);
-            var_dump($routeInfo);
-        }
-        catch (RouteNotFoundException $e) {
+        } catch (RouteNotFoundException $e) {
             require APP_ROOT . '/web/error404.php';
             die;
         }
 
-        return new Response(200, '
-        <link rel="stylesheet" href="/css/blog.css">
-        <body>Hello world</body>
-        ');
+        $controller = new $routeInfo['controller_class'];
+        return call_user_func([$controller, $routeInfo['controller_method']]);
+
     }
 }
