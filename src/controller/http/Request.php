@@ -3,6 +3,8 @@
 namespace Pierre\controller\http;
 
 
+use Pierre\service\Logger;
+
 class Request
 {
 
@@ -28,6 +30,10 @@ class Request
         $instance->getParameters = $_GET;
         $instance->query = $_SERVER['REQUEST_URI'];
         $instance->path = $_SERVER['PATH_INFO'];
+
+        Logger::get()->debug('Request is build from super globals (avec sa cape rouge)');
+
+
 
         return $instance;
     }
