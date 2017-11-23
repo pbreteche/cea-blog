@@ -1,0 +1,15 @@
+{% extends 'layout/front-office.html.twig' %}
+
+{% block workingArea %}
+    <h1>{{ title }}</h1>
+    <h2>Test without cache</h2>
+    <ul>
+        {% for article in articles %}
+        <li>{{ article.title }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+{% block title %}
+    {{ parent() }} : {{ title }}
+{% endblock %}

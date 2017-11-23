@@ -23,7 +23,10 @@ class BlogApp
         }
 
         $controller = new $routeInfo['controller_class'];
-        return call_user_func([$controller, $routeInfo['controller_method']]);
+        return call_user_func(
+            [$controller, $routeInfo['controller_method']],
+            ...$routeInfo['parameters']
+        );
 
     }
 }

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block layout %}
+
+<div class="toolbar">
+    {% block toolbar %}
+        <p>Toolbar</p>
+    {% endblock %}
+</div>
+
+<div class="nav-panel">
+    {% block nav %}
+        <p>Navigation</p>
+    {% endblock %}
+</div>
+
+<div class="working-area">
+    {% block workingArea %}{% endblock %}
+</div>
+
+{% endblock %}

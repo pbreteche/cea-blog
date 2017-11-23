@@ -9,12 +9,6 @@ use Pierre\model\RepositoryFactory;
 
 class ArticleController
 {
-
-    public function __construct()
-    {
-        $this->templateEngine = new TemplateEngine();
-    }
-
     /**
      * Liste des derniers articles
      *
@@ -22,22 +16,58 @@ class ArticleController
      */
     public function indexAction(): Response
     {
+        $repositoryContainer = new RepositoryFactory();
         /** @var \Pierre\model\ArticleRepository $articleRepository */
-        $articleRepository = RepositoryFactory::get('article');
+        $articleRepository = $repositoryContainer->get('article');
         $articles = $articleRepository->findLatest();
-        return new Response(
-            200,
-            $this->templateEngine->render(
-                'article',
-                [
-                    'articles' => $articles,
-                ]
-            )
+        /*return $this->renderHomeMade(
+            'article',
+            [
+                'articles' => $articles,
+                'title' => 'Latest news !'
+            ]
+        );
+        */
+        return $this->renderByTwig(
+            'index.html.twig',
+            [
+                'articles' => $articles,
+                'title' => 'Latest news !'
+            ]
         );
     }
 
-    public function showAction(): Response
+    private function renderByTwig($template, $data)
     {
-        return new Response(200, 'show action works');
+        $loader = new \Twig_Loader_Filesystem(APP_ROOT . '/src/view');
+        $twig = new \Twig_Environment($loader);
+        return new Response(
+            200,
+            $twig->render($template, $data)
+        );
+    }
+
+    private function renderHomeMade($templateConfig, $data)
+    {
+        return new Response(
+            200,
+            (new TemplateEngine($templateConfig))->render($data)
+        );
+    }
+
+    public function showAction($id): Response
+    {
+
+        $repositoryContainer = new RepositoryFactory();
+        /** @var \Pierre\model\ArticleRepository $articleRepository */
+        $articleRepository = $repositoryContainer->get('article');
+        $article = $articleRepository->findById($id);
+        return $this->renderByTwig(
+            'show.html.twig',
+            [
+                'article' => $article,
+                'title' => 'Latest news !'
+            ]
+        );
     }
 }

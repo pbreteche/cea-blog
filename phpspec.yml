@@ -1,0 +1,4 @@
+suites:
+    pierre_suite:
+        namespace: Pierre
+        psr4_prefix: Pierre
